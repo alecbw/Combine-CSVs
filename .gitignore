@@ -1,3 +1,7 @@
+*.csv
+*.xlsx
+*.xlx
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
