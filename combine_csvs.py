@@ -42,7 +42,7 @@ def combine_csvs():
         original_df = pd.concat([original_df, df], axis=0, ignore_index=True, sort=False)
 
     original_df.to_csv(args.output_filename, index=False)
-    print(f"Combination process is finished. Output file is called: '{args.output_filename}' \n")
+    print(f"Combination process is finished. Output file is called: '{args.output_filename}'. It has {original_df.shape[0]} rows and {original_df.shape[1]} columns \n")
 
 if __name__ == "__main__":
     combine_csvs()
