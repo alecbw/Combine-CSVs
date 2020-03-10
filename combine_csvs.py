@@ -36,13 +36,13 @@ def combine_csvs():
     list_of_files = [f for f in os.listdir('.') if os.path.isfile(f) and ".csv" in f and f != args.output_filename]
     print(f"\nFiles that will be concatenated are: {list_of_files} \n")
 
-    original_df = pd.DataFrame()
+    result_df = pd.DataFrame()
     for file in list_of_files:
         df = pd.read_csv(file, keep_default_na=False, engine=args.engine, error_bad_lines=detect_boolean(args.break_on_errors))
-        original_df = pd.concat([original_df, df], axis=0, ignore_index=True, sort=False)
+        result_df = pd.concat([result_df, df], axis=0, ignore_index=True, sort=False)
 
-    original_df.to_csv(args.output_filename, index=False)
-    print(f"Combination process is finished. Output file is called: '{args.output_filename}'. It has {original_df.shape[0]} rows and {original_df.shape[1]} columns \n")
+    result_df.to_csv(args.output_filename, index=False)
+    print(f"Combination process is finished. Output file is called: '{args.output_filename}'. It has {result_df.shape[0]} rows and {result_df.shape[1]} columns \n")
 
 if __name__ == "__main__":
     combine_csvs()
