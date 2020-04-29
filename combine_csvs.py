@@ -33,7 +33,7 @@ def detect_boolean(v):
     else:
         raise argparse.ArgumentTypeError('Boolean value expected.')
 
-# Default delimiter: regex for multiple spaces
+# Default delimiter: regex for two or more spaces or tabs
 # Fun pandas fact: "sep" and "delimiter" are the same thing
 def combine_txts():
     list_of_files = [f for f in os.listdir('.') if os.path.isfile(f) and ".txt" in f and f != args.output_filename]
