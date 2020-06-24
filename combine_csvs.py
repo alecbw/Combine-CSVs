@@ -36,7 +36,7 @@ def detect_boolean(v):
 # Default delimiter: regex for two or more spaces or tabs
 # Fun pandas fact: "sep" and "delimiter" are the same thing
 def combine_txts():
-    list_of_files = [f for f in os.listdir('.') if os.path.isfile(f) and ".txt" in f and f != args.output_filename]
+    list_of_files = [f for f in os.listdir('.') if (os.path.isfile(f) and ".txt" in f and f != args.output_filename and os.path.getsize(f) != 0)]
     print(f"\nFiles that will be concatenated are: {list_of_files} \n")
 
     result_df = pd.DataFrame()
@@ -49,7 +49,7 @@ def combine_txts():
 
 
 def combine_csvs():
-    list_of_files = [f for f in os.listdir('.') if os.path.isfile(f) and ".csv" in f and f != args.output_filename]
+    list_of_files = [f for f in os.listdir('.') if (os.path.isfile(f) and ".csv" in f and f != args.output_filename and os.path.getsize(f) != 0)]
     print(f"\nFiles that will be concatenated are: {list_of_files} \n")
 
     result_df = pd.DataFrame()
@@ -61,6 +61,7 @@ def combine_csvs():
     print(f"Combination process is finished. Output file is called: '{args.output_filename}'. It has {result_df.shape[0]} rows and {result_df.shape[1]} columns \n")
 
 if __name__ == "__main__":
+
     if args.type.lower() == "txt":
         combine_txts()
     else:
