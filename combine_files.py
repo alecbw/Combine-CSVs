@@ -1,6 +1,7 @@
 import sys
 import os
 import argparse
+import json
 
 try:
     import pandas as pd
@@ -35,10 +36,7 @@ def detect_boolean(v):
 
 # Default delimiter: regex for two or more spaces or tabs
 # Fun pandas fact: "sep" and "delimiter" are the same thing
-def combine_txts():
-    list_of_files = [f for f in os.listdir('.') if (os.path.isfile(f) and ".txt" in f and f != args.output_filename and os.path.getsize(f) != 0)]
-    print(f"\nFiles that will be concatenated are: {list_of_files} \n")
-
+def combine_txts(list_of_files):
     result_df = pd.DataFrame()
     for file in list_of_files:
         df = pd.read_csv(file, sep=args.separator, header=None, keep_default_na=False, engine=args.engine, error_bad_lines=detect_boolean(args.break_on_errors))
@@ -47,11 +45,18 @@ def combine_txts():
     result_df.to_csv(args.output_filename, index=False)
     print(f"Combination process is finished. Output file is called: '{args.output_filename}'. It has {result_df.shape[0]} rows and {result_df.shape[1]} columns \n")
 
+def combine_jsons(list_of_files):
+    output_lod = []
+    for file in list_of_files:
+        with open(file) as f:
+             output_lod.append(json.load(f))
 
-def combine_csvs():
-    list_of_files = [f for f in os.listdir('.') if (os.path.isfile(f) and ".csv" in f and f != args.output_filename and os.path.getsize(f) != 0)]
-    print(f"\nFiles that will be concatenated are: {list_of_files} \n")
+    result_df = pd.DataFrame(output_lod)
+    result_df.to_csv(args.output_filename, index=False)
+    print(f"Combination process is finished. Output file is called: '{args.output_filename}'. It has {result_df.shape[0]} rows and {result_df.shape[1]} columns \n")
 
+
+def combine_csvs(list_of_files):
     result_df = pd.DataFrame()
     for file in list_of_files:
         df = pd.read_csv(file, keep_default_na=False, engine=args.engine, error_bad_lines=detect_boolean(args.break_on_errors))
@@ -61,10 +66,18 @@ def combine_csvs():
     print(f"Combination process is finished. Output file is called: '{args.output_filename}'. It has {result_df.shape[0]} rows and {result_df.shape[1]} columns \n")
 
 if __name__ == "__main__":
+    list_of_files = [f for f in os.listdir('.') if (os.path.isfile(f) and f".{args.type.lower()}" in f and f != args.output_filename and os.path.getsize(f) != 0)]
+
+    if len(list_of_files) < 30:
+        print(f"\nFiles that will be combined are: \n{list_of_files} \n")
+    else:
+        print(f"\nYou have: {len(list_of_files)} files that will be combined \n")
 
     if args.type.lower() == "txt":
-        combine_txts()
+        combine_txts(list_of_files)
+    elif args.type.lower() == "json":
+        combine_jsons(list_of_files)
     else:
-        combine_csvs()
+        combine_csvs(list_of_files)
 
 
