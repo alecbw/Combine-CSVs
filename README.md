@@ -1,5 +1,17 @@
 # Combine_CSVs
-A quick CLI to concatenate CSVs or TXT files into one CSV. Supports mismatched columns and partial data. Requires minimal technical background to use.
+A quick CLI to concatenate CSVs, JSON strings, or TXT files into one CSV. 
+
+Supports mismatched columns and partial data. 
+
+Requires minimal technical background to use.
+
+### Setup
+
+Install pip and pandas
+```py
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && python get-pip.py
+pip install pandas
+```
 
 ### Usage
 
