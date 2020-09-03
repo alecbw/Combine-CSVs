@@ -1,4 +1,4 @@
-# Combine_CSVs
+# Combine_Files
 A quick CLI to concatenate CSVs, JSON strings, or TXT files into one CSV. 
 
 Supports mismatched columns and partial data. 
